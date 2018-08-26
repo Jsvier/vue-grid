@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MicroServicios-Makro</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div id="app">
+            <div class="row">
+                <br/><br/>
+                <vue-bootstrap-table
+                        :columns="columns"
+                        :values="values"
+                        :show-filter="showFilter"
+                        :show-column-picker="showPicker"
+                        :paginated="paginated"
+                        :multi-column-sortable="multiColumnSortable"
+                >
+                </vue-bootstrap-table>
+            </div>
+        </div>
+    </div>
+    <div>
+    <download-excel
+        class   = "btn btn-default"
+        :data   = "json_data"
+        :fields = "json_fields"
+        type    = "csv"
+        name    = "filename.xls">
+    </download-excel>
+    </div>
+    <script src="vue.js"></script>
+    <script src="../dist/vue-bootstrap-table.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.js"></script>
+  
+    <script src="app.js"></script>
+</body>
+</html>
