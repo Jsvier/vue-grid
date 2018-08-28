@@ -736,7 +736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        pageSize: {
 	            type: Number,
 	            required: false,
-	            default: 10
+	            default: 50
 	        },
 	        /**
 	         * If loading of table is to be done through ajax, then this object must be set
@@ -775,7 +775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            filteredValues: [],
 	            page: 1,
 	            echo: 0,
-	            loading: false
+	            loading: true
 	        };
 	    },
 	    ready: function ready() {
@@ -884,7 +884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.fetchData(function (data) {
 	                    self.filteredSize = data.filtered;
 	                    self.filteredValues = data.data;
-	                    self.loading = false;
+	                    self.loading = true;
 	                });
 	            } else {
 	                var result = this.values.filter(function (item) {

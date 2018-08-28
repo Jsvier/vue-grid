@@ -21,23 +21,32 @@ new Vue({
                 showFilter: true,
                 showPicker: true,
                 paginated: true,
-                multiColumnSortable: true,
+                pageSize: 20,
                 ajax: {
-                    enabled: false,
-                    url: "https://restcountries.eu/rest/v1/all",
-                  //  url: "http://10.49.39.140/api/customer",
-                    method: "GET",
-                    delegate: true,
+                    //  url: "https://restcountries.eu/rest/v1/all",
+                    url: "http://10.49.39.140/api/customer",
                 },
                 columns: [
                     {
-                        title:"name",
+                        title:"rn",
                         visible: true,
                         editable: false,
                     },
                     {
-                        title:"topLevelDomain",
-                        name: "topLevelDomain",
+                        title:"Tienda",
+                        name: "store_no",
+                        visible: true,
+                        editable: true,
+                    },
+                    {
+                        title:"cust_no",
+                        name: "cust_no",
+                        visible: true,
+                        editable: true,
+                    },
+                    {
+                        title:"name",
+                        name: "name",
                         visible: true,
                         editable: true,
                     }
@@ -50,9 +59,10 @@ new Vue({
         apiCustomer: function(){
             this.$http.get(this.ajax.url)
                 .then( (response) => {
-                    this.values = response.data;
+                    this.values = response.data.results.data;
             })
-            .catch((err) => console.log(err.data))
+            .catch((err) => console.log(err.data));
+            console.log(this)
       }
     },
     events: {
