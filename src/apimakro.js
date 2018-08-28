@@ -1,4 +1,20 @@
 
+// Define a new component called button-counter
+Vue.component('url-makro', {
+  data: function () {
+    return {
+      editorEnabled: false
+    }
+  },
+  props: ['url'],
+  template: '<div v-if="editorEnabled"> <input v-model="url"><v-btn flat color="orange" @click="changeUrl()"><v-icon large color="orange darken-2">save</v-icon></div><div v-else><a target="_blank"v-model="url" href="www.google.com" >{{url}}</a><v-btn flat color="orange" @click="changeUrl()"><v-icon large color="orange darken-2">edit</v-icon></div>',
+  methods: {
+    changeUrl: function () {
+      this.editorEnabled= !this.editorEnabled;
+    }
+  }
+});
+
 new Vue({
     el: '#app',
     data () {
@@ -6,14 +22,14 @@ new Vue({
         apiKey: '',
         adminMode: false,
         activado:false,
+        editorEnabled: false,
         orgs: [],
         errors: [],
         makroData: [],         
       }
     },
     created: function () {
-      this.getOrgs();
-    },
+        },
     computed: {
      headers: function () { 
        return {
@@ -45,17 +61,6 @@ new Vue({
          // JSON responses are automatically parsed.
          this.makroData = response.data;
          this.activado= false; 
-       })
-       .catch(e => {
-         this.errors.push(e)
-       })
-      },
-      getOrgs () {
-        axios.get('/api/organizations/')
-        .then(response => {
-         // JSON responses are automatically parsed.
-         this.orgs = response.data;
-         this.org = this.orgs[0]; // set default org
        })
        .catch(e => {
          this.errors.push(e)

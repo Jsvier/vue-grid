@@ -33,10 +33,26 @@
                     <v-card-title primary-title class="headline mb-0"><h5>{{api.name}}</h5></v-card-title>
                     <v-card-actions>
                         <v-btn flat color="orange" @click="getMakro(api.url)"><v-icon dark>play_arrow</v-icon>[{{api.method}}]</v-btn>
-                        <a target="_blank" :href="api.urltest">{{api.url}}</a>
-                    </v-card-actions>                   
+                       <!--PONER ADENTRO, Y LOS METODOS-->>
+                        <url-makro url="www.google.com.ar"></url-makro>
+   <!--
+                     <div>
+                        <div v-show="!editorEnabled">
+                            <a target="_blank" :href="api.urltest">{{api.url}}</a>
+                            <v-btn flat color="orange" @click="changeUrl()"><v-icon dark>play_arrow</v-icon></v-btn>
+                        </div>
+                        <div v-show="editorEnabled">
+                            <input v-model="api.url" v-show="editorEnabled">
+                            <a href="#" ng-click="save()">Salvar</a>
+                          or
+                          <a href="#" ng-click="disableEditor()">Cancelar</a>
+                        </div>
+                      </div>
+                  -->
+                    
+                      </v-card-actions>                   
                   </v-card>
-                </v-flex>
+              </v-flex>
             <v-flex xs6>
                 <v-card>
                    <v-card-title primary-title class="headline mb-0"><h3>API Response</h3></v-card-title>
