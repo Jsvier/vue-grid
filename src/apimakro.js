@@ -3,14 +3,51 @@
 Vue.component('url-makro', {
   data: function () {
     return {
-      editorEnabled: false
+      activado: false
     }
   },
-  props: ['url'],
-  template: '<div v-if="editorEnabled"> <input v-model="url"><v-btn flat color="orange" @click="changeUrl()"><v-icon large color="orange darken-2">save</v-icon></div><div v-else><a target="_blank"v-model="url" href="www.google.com" >{{url}}</a><v-btn flat color="orange" @click="changeUrl()"><v-icon large color="orange darken-2">edit</v-icon></div>',
+  props: {
+    data: {
+        type: Object
+    }
+  },
+  computed: {
+    hrefTarget () {
+      return (this.enabled ? "_blank" : "_self")
+    }
+  },
+  template: '<div v-if="activado">'+
+              '<v-btn flat color="orange" @click="getMakro(data.api.url)"><v-icon dark>play_arrow</v-icon>[GET]</v-btn>'+
+              '<input v-model="data.api.url">'+
+              '<v-btn flat color="orange" @click="changeUrl()"><v-icon large color="orange darken-2">save</v-icon>'+
+            '</div>'+
+            '<div v-else>'+
+              '<v-btn flat color="orange" @click="getMakro(data.api.url)"><v-icon dark>play_arrow</v-icon>[GET]</v-btn>'+
+              '<a :href="data.api.url" :target="hrefTarget">{{data.api.url}}</a><v-btn flat color="orange" @click="changeUrl()"><v-icon large color="orange darken-2">edit</v-icon>'+
+            '</div>',
+
+  mounted: function () {
+    console.log(this.data);
+  },
+
   methods: {
     changeUrl: function () {
-      this.editorEnabled= !this.editorEnabled;
+      this.activado= !this.activado;
+    },
+    getMakro (resource) {
+      var bus = new Vue();
+      bus.$emit('incrementar-clicks', 1);
+     
+ /*    axios.get(resource)
+      .then(response => {
+       // JSON responses are automatically parsed.
+       var bus = new Vue();
+       bus.$emit('incrementar-clicks', 1);
+      // this.makroData = response.data;
+     })
+     .catch(e => {
+       this.errors.push(e)
+     })*/
     }
   }
 });
@@ -21,15 +58,16 @@ new Vue({
       return {
         apiKey: '',
         adminMode: false,
-        activado:false,
-        editorEnabled: false,
         orgs: [],
         errors: [],
         makroData: [],         
       }
     },
-    created: function () {
-        },
+    created: function() {
+      bus.$on('incrementar-clicks', function (id) {
+        console.log('ddddd');
+      }.bind(this))
+    },
     computed: {
      headers: function () { 
        return {
@@ -40,7 +78,6 @@ new Vue({
      apis: function () {
        return [
          {
-           name: 'Clientes',
            method: 'GET',   
            url: 'http://10.49.39.140/api/customer',   
            urltest: 'file:///C:/source-git/vue-grid/src/customer.html'
@@ -54,18 +91,7 @@ new Vue({
      }
     },
     methods: {
-      getMakro (resource) {
-        this.activado= true;
-        axios.get(resource)
-        .then(response => {
-         // JSON responses are automatically parsed.
-         this.makroData = response.data;
-         this.activado= false; 
-       })
-       .catch(e => {
-         this.errors.push(e)
-       })
-      }
+
     },
    watch: {
      org: function () {

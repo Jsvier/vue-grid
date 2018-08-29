@@ -29,39 +29,13 @@
           </v-layout>    
           <v-layout>
               <v-flex xs6>
-                  <v-card v-for="(api, index) in apis" :key="index">
-                    <v-card-title primary-title class="headline mb-0"><h5>{{api.name}}</h5></v-card-title>
-                    <v-card-actions>
-                        <v-btn flat color="orange" @click="getMakro(api.url)"><v-icon dark>play_arrow</v-icon>[{{api.method}}]</v-btn>
-                       <!--PONER ADENTRO, Y LOS METODOS-->>
-                        <url-makro url="www.google.com.ar"></url-makro>
-   <!--
-                     <div>
-                        <div v-show="!editorEnabled">
-                            <a target="_blank" :href="api.urltest">{{api.url}}</a>
-                            <v-btn flat color="orange" @click="changeUrl()"><v-icon dark>play_arrow</v-icon></v-btn>
-                        </div>
-                        <div v-show="editorEnabled">
-                            <input v-model="api.url" v-show="editorEnabled">
-                            <a href="#" ng-click="save()">Salvar</a>
-                          or
-                          <a href="#" ng-click="disableEditor()">Cancelar</a>
-                        </div>
-                      </div>
-                  -->
-                    
-                      </v-card-actions>                   
-                  </v-card>
+                  <v-card v-for="(api, index) in apis" :key="index">                     
+                    <url-makro :data="{api}"></url-makro>
               </v-flex>
             <v-flex xs6>
                 <v-card>
                    <v-card-title primary-title class="headline mb-0"><h3>API Response</h3></v-card-title>
-                    <v-card-text  v-show="!activado" class="px-0" left><pre>{{makroData}}</pre></v-card-text> 
-                    <div v-show="activado" class="hollow-dots-spinner" :style="spinnerStyle">
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                      </div>
+                    <v-card-text class="px-0" left><pre>{{makroData}}</pre></v-card-text> 
                 </v-card>
             </v-flex>
           </v-layout>
