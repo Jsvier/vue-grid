@@ -18,12 +18,12 @@ Vue.component('urlsmakro', {
   },
   template: '<div v-if="activado">'+
               '<v-btn flat color="orange" @click="getMakro(data.api.url)"><v-icon dark>play_arrow</v-icon>[{{data.api.method}}]</v-btn>'+
-              '<input  class="Input-text" v-model="data.api.url">'+
-              '<v-btn flat color="orange" @click="changeUrl()"><v-icon large color="orange darken-2">save</v-icon>'+
+              '<input id="txtbox" v-model="data.api.url">'+
+              '<v-btn flat color="orange" right fab @click="changeUrl()"><v-icon large color="orange">save</v-icon>'+
             '</div>'+
             '<div v-else>'+
               '<v-btn flat color="orange" @click="getMakro(data.api.url)"><v-icon dark>play_arrow</v-icon>[GET]</v-btn>'+
-              '<a :href="data.api.url" :target="hrefTarget">{{data.api.url}}</a><v-btn flat color="orange" @click="changeUrl()"><v-icon large color="orange darken-2">edit</v-icon>'+
+              '<a :href="data.api.urltest" :target="hrefTarget">{{data.api.url}}</a><v-btn flat color="orange" right fab @click="changeUrl()"><v-icon large color="orange">edit</v-icon>'+
             '</div>',
 
   mounted: function () {
@@ -45,8 +45,10 @@ new Vue({
   //  components: { urlsmakro: urlsmakro},
     data () {
       return {
-        apiKey: '',
-        adminMode: false,
+          dialog: false,
+          loading: false,
+          sound: false,
+          widgets: false,
         orgs: [],
         errors: [],
         makroData: [],         
@@ -81,15 +83,19 @@ new Vue({
     },
     methods: {
       responseJSON(resource){
+        this.loading= true;
         axios.get(resource)
         .then(response => {
        // JSON responses are automatically parsed.
           this.makroData = response.data;
+          this.loading= false;
      })
      .catch(e => {
        this.errors.push(e)
+       this.loading= false;
        this.makroData = e.message;
      })
+
     }
     },
    watch: {

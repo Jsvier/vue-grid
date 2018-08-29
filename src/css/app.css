@@ -398,17 +398,10 @@
         opacity: 0;
       }
     }
-
-
-
-    
-p {
-  line-height: 1.4;
+.loading-dialog {
+  background-color: #303030;
+  opacity: 0.5;
 }
-
-a {
-  outline: none;
-  text-decoration: none;
-  padding: 50px 20px 0;
-  size : 200px;
+#txtbox {
+  width : 350px;
 }
