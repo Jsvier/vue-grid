@@ -30,7 +30,7 @@
           <v-layout>
               <v-flex xs6>
                   <v-card v-for="(api, index) in apis" :key="index">                     
-                    <url-makro :data="{api}"></url-makro>
+                    <urlsmakro  @responsejson="responseJSON" :data="{api}"></urlsmakro>
               </v-flex>
             <v-flex xs6>
                 <v-card>

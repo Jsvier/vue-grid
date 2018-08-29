@@ -398,3 +398,17 @@
         opacity: 0;
       }
     }
+
+
+
+    
+p {
+  line-height: 1.4;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  padding: 50px 20px 0;
+  size : 200px;
+}
