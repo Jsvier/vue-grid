@@ -10,8 +10,12 @@
 <body>
     <div class="container-fluid">
         <div id="app">
+                <br></br>
+            <a class="makrobutton" @click="csvExport()" >
+                <span class="css-button-icon"><i class="fa fa-file-excel-o" aria-hidden="true"></i></span>
+                <span class="css-button-text">Export csv</span>
+            </a>
             <div class="row">
-                <br/><br/>
                 <vue-bootstrap-table
                         :columns="columns"
                         :values="values"
@@ -23,19 +27,10 @@
                 </vue-bootstrap-table>
             </div>
         </div>
-    </div>
-  <!--  <div>
-    <download-excel
-        class   = "btn btn-default"
-        :data   = "json_data"
-        :fields = "json_fields"
-        type    = "csv"
-        name    = "filename.xls">
-    </download-excel>
-    </div> -->
-    <script src="../dist/vue.js"></script>
-    <script src="../dist/vue-bootstrap-table.js"></script>
-    <script src="../dist/vue-bootstrap-table.js"></script>
-    <script type="text/javascript" src="../dist/vue-resource.js"></script>
+    </div>          
+    <script src="js/vue.js"></script>
+    <script src="js/vue-bootstrap-table.js"></script>
+    <script src="js/vue-bootstrap-table.js"></script>
+    <script type="text/javascript" src="js/vue-resource.js"></script>
     <script src="customer.js"></script>
 </body>

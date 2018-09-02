@@ -8,13 +8,14 @@
 </head>
 <body>
   <div id="app">
+      <customer :show="showModal" @close="showModal = true"></customer>
   <v-app light>
     <v-toolbar dark color="red">
       <v-toolbar-title >Makro Dashboard API</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
       <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn flat @click="adminMode = !adminMode">Admin</v-btn>
+          <v-btn flat @click="conectar()">Conectar</v-btn>
         </v-toolbar-items>
     </v-toolbar>
     <v-content>
@@ -23,14 +24,14 @@
               <v-flex xs6 offset-xs2>
                 <h2>Makro Dashboard API</h2>
                 <p>
-                  Contruir webapp faciles con Makro APIs es facil. solo de constuir con Express backend, validando Makro API requests. 
+                  Contruir o probar webapp nunca fue mas facil con Makro Dashboard API. Mediante los GET o POST se procesa la peticion http mediante el API Response, Mediante los link de acceso se accede a las pantalla de resultados. 
                 </p>
               </v-flex>
           </v-layout>    
           <v-layout>
               <v-flex xs6>
                   <v-card v-for="(api, index) in apis" :key="index">                     
-                    <urlsmakro  @responsejson="responseJSON" :data="{api}"></urlsmakro>
+                    <urlsmakro :data="{api}"></urlsmakro>
               </v-flex>
             <v-flex xs6>
                 <v-card>
@@ -54,9 +55,10 @@
     </v-content>
   </v-app>
 </div>
-  <script src='../dist/vue2.js'></script>
-  <script src='../dist/vuetify.min.js'></script>
-  <script src='../dist/axios.js'></script>
+  <script src='js/vue.js'></script>
+  <script src='js/vuetify.min.js'></script>
+  <script src='js/axios.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
   <script src="apimakro.js"></script>
 </body>
 </html>

@@ -1,30 +1,32 @@
-Vue.config.debug = true;
-Vue.config.devtools = true;
-//Vue.http.headers.common['Content-Type'] = 'application/json';
-//Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
-//Vue.http.headers.common['Accept'] = 'application/json, text/plain, */*';
-//Vue.http.headers.common['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin';
+Vue.component('modal', {
+    template: '#modal-template',
+    props: {
+      show: {
+        type: Boolean,
+        required: true,
+        twoWay: true  
+      }
+    }
+  });
 
-new Vue({
+var vm = new Vue({
     el: '#app',
     components: {
         VueBootstrapTable: VueBootstrapTable
     },
     created:function (){
         this.apiCustomer();
-
     },
         //Asociar a una funcion anonima, nuevo contexto de ejecucion
         data: function(){
             return {
-                logging: [],
                 showFilter: true,
                 showPicker: true,
                 paginated: true,
                 pageSize: 20,
+                showModal: false,
                 ajax: {
-                    //  url: "https://restcountries.eu/rest/v1/all",
-                    url: "http://10.49.39.140/api/customer",
+                    url: window.location.href,
                 },
                 columns: [
                     {
@@ -52,20 +54,35 @@ new Vue({
                     }
                 ],
                 values: [
-        ]
+        ],
+        errors: []
         };
     },
     methods: {
         apiCustomer: function(){
+            this.values = [];
+
             this.$http.get(this.ajax.url)
                 .then( (response) => {
                     this.values = response.data.results.data;
             })
-            .catch((err) => console.log(err.data));
-            console.log(this)
+            .catch((error) => this.errors.push(error));
+      },
+      csvExport() {
+        console.log(this.$route);
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += [
+          Object.keys(this.values[0]).join(";"),
+          ...arrData.map(item => Object.values(item).join(";"))
+        ]
+          .join("\n")
+          .replace(/(^\[)|(\]$)/gm, "");
+  
+        const data = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", data);
+        link.setAttribute("download", "export.csv");
+        link.click();
       }
-    },
-    events: {
-
     },
 });

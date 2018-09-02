@@ -1,70 +1,55 @@
-var vue = require('vue-loader')
-var webpack = require("webpack")
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
+const path = require('path');
 
-var cssLoader = ExtractTextPlugin.extract("style-loader", "css-loader")
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
-    entry: {
-        app: './src/app.js'
-    },
-    output: {
-        path: './build',
-        publicPath: '/build/',
-        filename: 'bundle.js'
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.vue$/,
-                loader: 'vue'
-            },
-            {
-                test: /\.js$/,
-                // excluding some local linked packages.
-                // for normal use cases only node_modules is needed.
-                exclude: /node_modules/,
-                loader: 'babel'
-            },
-            {
-                test: /\.css$/,
-                loader: cssLoader
-            }
-        ]
-    },
-    // vue: {
-    //   loaders: {
-    //     css: ExtractTextPlugin.extract("css"),
-    //     stylus: ExtractTextPlugin.extract("css!stylus")
-    //   }
-    // },
-    devtool: "#source-map",
-    babel: {
-        presets: ['es2015'],
-        plugins: ['transform-runtime']
-    }
-}
-
-if (process.env.NODE_ENV === 'production') {
-
-    delete module.exports.devtool
-    module.exports.plugins = [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.optimize.OccurenceOrderPlugin()
-        // new ExtractTextPlugin("build.css")
+  entry: './src/apimakro.js',
+  output: {
+    path: __dirname + '/dist',
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
+      },
+      {
+        test: /\.js$/,
+        loader: "babel-loader",
+        exclude:/node_modules/,
+        query: {
+          presets:['es2015']
+        }
+      }
     ]
-} else {
-    // module.exports.plugins = [
-    //   new ExtractTextPlugin("build.css")
-    // ]
-    // module.exports.devtool = '#source-map'
+  },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    },
+    extensions: ['*', '.js', '.vue', '.json']
+  },
+  plugins: [
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({
+      template: './src/apimakro.html',
+      minify: {
+        collapseWhitespace: true
+      },
+      hash: true
+    })
+  ]
 }
