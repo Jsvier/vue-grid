@@ -198,16 +198,15 @@ var vm = new Vue({
     methods: {
       responseGET(resource){
         this.stateAPI(true);
-        axios.get(resource.api.url)
-        .then(response => {
+        this.$http.get(resource.api.url)
+        .then( (response) => {
           this.makroData = response.data.results.data;
           this.stateAPI(false);
-     })
-     .catch(e => {
-       this.errors.push(e)
-       this.stateAPI(false);
-       this.makroData = e.message;
-     })
+        })  
+        .catch((error) => {
+          this.errors.push(error);
+          this.makroData = error.message;
+        });
     },
     responsePOST(resource){
       this.stateAPI(true);
@@ -217,16 +216,16 @@ var vm = new Vue({
         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
     }
 
-      axios.post(resource.api.url, resource.dataJSON,headers)
+      this.$http.post(resource.api.url, resource.dataJSON,headers)
       .then(response => {
         this.makroData = response.api.url.data;
+        this.stateAPI(false); 
+      })
+      .catch(error => {
+        this.errors.push(error)
         this.stateAPI(false);
-   })
-   .catch(e => {
-     this.errors.push(e)
-     this.stateAPI(false);
-     this.makroData = e.message;
-   })
+        this.makroData = error.message;
+      })
   },
   stateAPI(state){
       showModal = state;
