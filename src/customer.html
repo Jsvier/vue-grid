@@ -11,7 +11,7 @@
     <div class="container-fluid">
         <div id="app">
                 <br></br>
-            <a class="makrobutton" @click="csvExport()" >
+            <a class="makrobutton" @click="csvExport()" :disabled='true' >
                 <span class="css-button-icon"><i class="fa fa-file-excel-o" aria-hidden="true"></i></span>
                 <span class="css-button-text">Export csv</span>
             </a>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>          
-    <script src="js/vue.js"></script>
+    <script src="js/vue-table.js"></script>
     <script src="js/vue-bootstrap-table.js"></script>
     <script src="js/vue-bootstrap-table.js"></script>
     <script type="text/javascript" src="js/vue-resource.js"></script>

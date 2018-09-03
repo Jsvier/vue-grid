@@ -200,7 +200,7 @@ var vm = new Vue({
         this.stateAPI(true);
         axios.get(resource.api.url)
         .then(response => {
-          this.makroData = response.api.url.data;
+          this.makroData = response.data.results.data;
           this.stateAPI(false);
      })
      .catch(e => {
@@ -211,7 +211,13 @@ var vm = new Vue({
     },
     responsePOST(resource){
       this.stateAPI(true);
-      axios.post(resource.api.url, resource.dataJSON)
+
+      var headers = {
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+    }
+
+      axios.post(resource.api.url, resource.dataJSON,headers)
       .then(response => {
         this.makroData = response.api.url.data;
         this.stateAPI(false);

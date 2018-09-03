@@ -26,7 +26,7 @@ var vm = new Vue({
                 pageSize: 20,
                 showModal: false,
                 ajax: {
-                    url: window.location.href,
+                    url: 'http://10.49.39.140/api/customer',
                 },
                 columns: [
                     {
@@ -60,29 +60,26 @@ var vm = new Vue({
     },
     methods: {
         apiCustomer: function(){
-            this.values = [];
-
             this.$http.get(this.ajax.url)
                 .then( (response) => {
                     this.values = response.data.results.data;
             })
-            .catch((error) => this.errors.push(error));
-      },
-      csvExport() {
-        console.log(this.$route);
-        let csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += [
-          Object.keys(this.values[0]).join(";"),
-          ...arrData.map(item => Object.values(item).join(";"))
-        ]
+            .catch((error) => console.log(error.data));
+        },
+        csvExport() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += [
+            Object.keys(this.values[0]).join(";"),
+             ...this.values.map(item => Object.values(item).join(";"))
+            ]
           .join("\n")
           .replace(/(^\[)|(\]$)/gm, "");
   
-        const data = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", data);
-        link.setAttribute("download", "export.csv");
-        link.click();
+            const data = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", data);
+            link.setAttribute("download", "export.csv");
+            link.click();
       }
     },
 });
